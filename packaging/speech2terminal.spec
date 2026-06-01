@@ -73,7 +73,7 @@ app = BUNDLE(
     coll,
     name="speech2terminal.app",
     icon=None,
-    bundle_identifier="com.oginni.speech2terminal",
+    bundle_identifier="com.oluyinka.speech2terminal",
     version=VERSION,
     info_plist={
         "LSUIElement": True,

@@ -1,0 +1,2 @@
+- [User Homebrew conventions](user_homebrew_conventions.md) — templegit9 identity, tap, bundle-id scheme, signing facts; MeetingIntro DOES notarize
+- [MeetingIntro pipeline shape](project_meetingintro_pipeline.md) — canonical reference pipeline + file locations for replicating to other apps

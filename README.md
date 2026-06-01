@@ -19,22 +19,23 @@ local on Apple Silicon (MLX Whisper); no audio leaves your Mac.
    iTerm, Terminal, and *inside* a remote SSH/tmux session), or via local
    `tmux send-keys` when `target = "tmux"`.
 
-## Install
+## Install (Homebrew — signed + notarized)
+
+```sh
+brew install --cask templegit9/tap/speech2terminal
+```
+
+First launch downloads the Whisper model (~1.5 GB) once.
+
+## Run from source (development)
 
 ```sh
 brew install portaudio python@3.12 tmux        # tmux only needed for tmux target
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-```
-
-## Run
-
-```sh
 speech2terminal        # menu-bar app; the 🎙︎ icon shows status
 ```
-
-First run downloads the Whisper model (~1.5 GB) once.
 
 ## macOS permissions (one-time)
 
