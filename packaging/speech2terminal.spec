@@ -34,7 +34,7 @@ for pkg in ["numba", "llvmlite", "scipy"]:
     hiddenimports += collect_submodules(pkg)
 
 hiddenimports += [
-    "webrtcvad", "pyperclip",
+    "webrtcvad", "pyperclip", "Quartz",
     "speech2terminal", "speech2terminal.app", "speech2terminal.settings_window",
 ]
 

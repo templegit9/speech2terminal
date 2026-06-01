@@ -15,6 +15,7 @@ multiprocessing.freeze_support()
 
 def _selftest(args) -> int:
     import sounddevice  # noqa: F401  (forces portaudio dylib load)
+    from speech2terminal import inject  # noqa: F401  (forces Quartz load)
     from speech2terminal import stt
 
     path = args[0] if args else None

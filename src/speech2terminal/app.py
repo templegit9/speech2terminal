@@ -43,6 +43,15 @@ def _icon_path(state: str) -> str | None:
     return str(p) if p.exists() else None
 
 
+# While voice is being captured, animate a glowing RGB mic instead of the
+# monochrome template glyph.
+_ACTIVE_STATES = {"recording", "confirming"}
+
+
+def _glow_frames() -> list[str]:
+    return [str(p) for p in sorted(_ICON_DIR.glob("glow_*.png"))]
+
+
 class App(rumps.App):
     def __init__(self, cfg: Config) -> None:
         first = _icon_path("idle")
@@ -54,6 +63,8 @@ class App(rumps.App):
 
         self._status = "idle"
         self._rendered = None
+        self._glow = _glow_frames()
+        self._glow_i = 0
         self._transcript = ""
         self._lock = threading.Lock()
         self._stop_flag = threading.Event()
@@ -81,10 +92,17 @@ class App(rumps.App):
     def _tick(self, _) -> None:
         with self._lock:
             status, transcript = self._status, self._transcript
-        if status != self._rendered:
+        if status in _ACTIVE_STATES and self._glow:
+            # Animated glowing RGB mic — cycle a frame each tick.
+            self._glow_i = (self._glow_i + 1) % len(self._glow)
+            self.template = False
+            self.icon = self._glow[self._glow_i]
+            self._rendered = None  # force a redraw of the static icon when we exit
+        elif status != self._rendered:
             self._rendered = status
             path = _icon_path(status)
             if path is not None:
+                self.template = True
                 self.icon = path
             else:
                 self.title = _STATE_EMOJI.get(status, "🎙︎")

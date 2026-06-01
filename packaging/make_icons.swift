@@ -80,3 +80,28 @@ for (px, name) in [(16,"16x16"),(32,"16x16@2x"),(32,"32x32"),(64,"32x32@2x"),
     writePNG(appIcon(px), "\(iconsetDir)/icon_\(name).png", px: px)
 }
 print("app iconset -> \(iconsetDir)")
+
+// --- glowing RGB mic frames (NON-template, colored) shown while voice is active ---
+let frames = 12
+let gpx = 44
+for i in 0..<frames {
+    let hue = CGFloat(i) / CGFloat(frames)
+    let color = NSColor(calibratedHue: hue, saturation: 0.95, brightness: 1.0, alpha: 1)
+    let out = NSImage(size: NSSize(width: gpx, height: gpx))
+    out.lockFocus()
+    let shadow = NSShadow()
+    shadow.shadowColor = color.withAlphaComponent(0.95)
+    shadow.shadowBlurRadius = CGFloat(gpx) * 0.24
+    shadow.shadowOffset = .zero
+    shadow.set()
+    let glyph = tint(symbolImage("mic.fill", pt: CGFloat(gpx) * 0.5, weight: .bold), color)
+    let g = glyph.size
+    let scale = (CGFloat(gpx) * 0.52) / max(g.width, g.height)
+    let w = g.width * scale, h = g.height * scale
+    let r = NSRect(x: (CGFloat(gpx)-w)/2, y: (CGFloat(gpx)-h)/2, width: w, height: h)
+    glyph.draw(in: r)
+    glyph.draw(in: r)  // double-draw -> brighter glow
+    out.unlockFocus()
+    writePNG(out, "\(menuDir)/glow_\(String(format: "%02d", i)).png", px: gpx)
+}
+print("glow frames -> \(menuDir)")
