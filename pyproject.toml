@@ -1,0 +1,24 @@
+[project]
+name = "speech2terminal"
+version = "0.1.0"
+description = "Voice-driven terminal dictation for macOS — hotkey, speak, confirm, run."
+requires-python = ">=3.11"
+dependencies = [
+    "mlx-whisper>=0.4.0",
+    "sounddevice>=0.4.6",
+    "webrtcvad>=2.0.10",
+    "pynput>=1.7.6",
+    "rumps>=0.4.0",
+    "pyperclip>=1.8.2",
+    "numpy>=1.26",
+]
+
+[project.scripts]
+speech2terminal = "speech2terminal.app:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

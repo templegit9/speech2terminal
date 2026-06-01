@@ -1,0 +1,16 @@
+# Copy to ~/.config/speech2terminal/config.toml (auto-created on first run).
+
+trigger_mode = "push_to_talk"   # push_to_talk | auto_silence | toggle
+confirm_mode = "voice"          # voice | paste_only | overlay
+target = "paste"                # paste | tmux
+
+hotkey = "f9"                   # single key: f9, f12, space, a, ...
+model = "mlx-community/whisper-large-v3-turbo"
+
+silence_ms = 1500               # trailing silence that ends a clip (auto_silence/voice)
+vad_level = 2                   # 0..3, higher = filters more non-speech
+max_record_s = 60               # hard cap on a single clip
+confirm_listen_s = 4            # voice-confirm listen window
+
+tmux_target = ""                # e.g. "work" or "work:0.1" (used when target=tmux)
+press_enter_on_run = true       # press Enter after a confirmed 'run'
