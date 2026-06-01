@@ -17,15 +17,19 @@ FRAME_MS = 30  # webrtcvad accepts 10/20/30 ms frames
 
 @dataclass
 class Config:
-    # trigger: "push_to_talk" | "auto_silence" | "toggle"
+    # trigger: "push_to_talk" | "long_press" | "auto_silence" | "toggle"
     trigger_mode: str = "push_to_talk"
     # confirm: "voice" | "paste_only" | "overlay"
     confirm_mode: str = "voice"
     # target: "paste" | "tmux"
     target: str = "paste"
 
-    # pynput key name for the hotkey (e.g. "f9", "<ctrl>+<alt>+space").
+    # Hotkey spec: optional modifiers + one main key, "+"-joined, lowercase.
+    # Modifiers: ctrl, alt (Option), shift, cmd. Main key: a letter, "space",
+    # "f1".."f12", or a side key like "alt_r"/"cmd_r". E.g. "ctrl+alt+space".
     hotkey: str = "f9"
+    # For trigger_mode == "long_press": hold this long (ms) before it activates.
+    long_press_ms: int = 400
 
     model: str = "mlx-community/whisper-large-v3-turbo"
 

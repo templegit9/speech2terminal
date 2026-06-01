@@ -5,11 +5,16 @@
 # torch/sympy/networkx/mpmath are excluded — verified unused on the MLX
 # inference path, and the heaviest native code to sign/notarize.
 
+import os
 from PyInstaller.utils.hooks import collect_all, collect_data_files, collect_submodules
 
 VERSION = "0.1.0"
 
+_ICONS_SRC = os.path.join(SPECPATH, "..", "src", "speech2terminal", "resources", "icons")
+_APP_ICNS = os.path.join(SPECPATH, "AppIcon.icns")
+
 datas, binaries, hiddenimports = [], [], []
+datas += [(_ICONS_SRC, "speech2terminal/resources/icons")]
 
 # Whole-package collection: grabs dylibs, the Metal lib, and data files.
 for pkg in [
@@ -28,7 +33,10 @@ datas += collect_data_files("_sounddevice_data")
 for pkg in ["numba", "llvmlite", "scipy"]:
     hiddenimports += collect_submodules(pkg)
 
-hiddenimports += ["webrtcvad", "pyperclip", "speech2terminal", "speech2terminal.app"]
+hiddenimports += [
+    "webrtcvad", "pyperclip",
+    "speech2terminal", "speech2terminal.app", "speech2terminal.settings_window",
+]
 
 a = Analysis(
     ["launcher.py"],
@@ -72,7 +80,7 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name="speech2terminal.app",
-    icon=None,
+    icon=_APP_ICNS,
     bundle_identifier="com.oluyinka.speech2terminal",
     version=VERSION,
     info_plist={
